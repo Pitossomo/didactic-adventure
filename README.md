@@ -79,3 +79,119 @@
 - Checar no localhost se tudo ok
 - Código compilado (x2)!
 -----
+## Enums e interfaces
+- Arquivar o arquivo app.ts original e criar um novo com interfaces customizadas:
+  ```ts
+  enum Profissao {
+    Professora,
+    Atriz,
+    Desenvolvedora,
+    JogadoraDeFutebol
+  }
+
+  interface Pessoa {
+    nome: string,
+    idade: number,
+    profissao: Profissao
+  }
+
+  interface Estudante extends Pessoa {
+    materias: string[]
+  }
+
+  const vanessa: Pessoa = {
+    nome: 'Vanessa',
+    idade: 32,
+    profissao: Profissao.Desenvolvedora
+  }
+
+  const jessica: Estudante = {
+    nome: 'Jessica',
+    idade: 23,
+    profissao: Profissao.Desenvolvedora,
+    materias: ['Cálculo', 'Álgebra Linear', 'História do Samba e Pagode', 'Formação de Plateia']
+  }
+
+  function listar(lista: string[]) {
+    for (const item of lista) {
+      console.log('- ', item)
+    }
+  }
+
+  listar(jessica.materias)
+  ```
+- Código compilado
+-----
+## Any e Unknown 
+- Variáveis com o tipo `any` podem receber qualquer tipo, removendo todas as vantagens do Typescript - logo, deve ser evitado sempre que possível
+- O tipo `unknown` é similar ao *any* com uma diferença: ao atribuírmos seu valor a outra variável, o Typescript nos obriga a realizar uma validação do tipo
+  ```ts
+    let unknownValue = 3
+    unknownValue = 'olá'
+    unknownValue = true
+
+    // let stringTest: string = unknonwnValue     // Essa linha não permitirá a compilação, temos que validar o unknownValue primeiro
+    let stringTest: string = (typeof unknownValue === 'string')
+      ? unknownValue
+      : 'o valor desconhecido não é uma string'
+  ```
+-----
+## Tipos customizados
+- Podemos criar tipos customizados
+  ```ts
+  type input = number | string    // O tipo input pode ser um number OU um string
+  ```
+## Trabalhando com funções
+- Em funções complexas, podemos tipar seu retorno para evitar erros:
+```ts
+  function soma(n1: number, n2: number): number {
+    return n1+n2
+  }
+
+  function logSoma(n1: number, n2: number): void {
+    console.log(n1+n2)
+  }
+```
+- Podemos também tipar as funções callback e arrow functions
+```ts
+  function somaETrata(num1: number, num2: number, callback: (value: number) => number): number {
+    let sum = num1 + num2
+    return callback(sum)
+  }
+
+  function aoQuadrado(num): number {
+    return num*num
+  }
+
+  console.log(somaETrata(2, 3, aoQuadrado)) // Loga 5*5 = 25
+```
+## Referências
+- https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
+## Configuração do projeto
+- O arquivo `tsconfig.json` dita como a validação será feita pelo Typescript
+- Propriedades importantes do arquivo *tsconfig.json*:
+  - "target"
+    - Informa qual a versão do Javascript para qual o Typescript será transpilado
+    - Exemplo de valor: "es2015"
+  - "lib"
+    - Informa quais as biblioteca serão usadas
+    - Exemplo: ["DOM", "es2020"]
+  - "outDir"
+    - Informa o diretório no qual os arquivos transpilados estarão no seu projeto
+    - Exemplo: "dist"
+  - "rootDir"
+    - Informa o diretório onde está o código a ser transpilado
+    - Exemplo: "src"
+  - "include"
+    - Padrão do nome dos arquivos a serem transpilados
+    - Exemplo: ["src/**/*.ts"]
+  - "exclude"
+    - Padrão de nome dos arquivos que não deverão ser transpilados
+    - Exemplo: ["tests.ts"]
+  - "noImplicitAny"
+    - Boolean que permite ou não o uso implícito do tipo any
+  - "strictNullCheck"
+    - Boolean que certifica que há checagem quanto a tipos possivelmente nulos
+
+
+  
