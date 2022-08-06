@@ -53,3 +53,29 @@
 - Criar um arquivo app.ts na raíz para iniciar a refatoração, e arquivar o arquivo app.js original.
 - Código Comittado. 
 -----
+## Refatorando para Typescript
+
+- Criar o tsconfig.json com `tsc --init`
+- Refatorar o código anterior para Typescript
+  ```ts
+  function sumNumbers(
+    num1: number, num2: number,
+    frase: string,
+    mustPrint: boolean = true
+  ) {
+    const sum = Number(num1) + Number(num2) 
+    if (mustPrint) console.log(frase+sum)
+    return sum
+  }
+
+  if (button) button.addEventListener('click', () => {
+    if (input1 && input2)
+    sumNumbers(Number(input1.value), Number(input2.value), "O valor é: ", true)
+  })
+  ```
+- Criar o script para compilar e rodar o código TS `"watch": "tsc --watch"`
+- Compilar o código `npm run watch`
+- Rodar novamente o servidor `npm start`
+- Checar no localhost se tudo ok
+- Código compilado (x2)!
+-----
